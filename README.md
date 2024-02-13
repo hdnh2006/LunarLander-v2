@@ -7,7 +7,9 @@ Deep Neuroevolution algorithm for LunarLander-v2 in gym (gymnasium)
   </a>
 </div>
 
-![Screen GIF](assets/lunar_lander.gif)
+<p align="center">
+  <img src="assets/lunar_lander.gif" />
+</p>
 
 
 ## Deep Neuroevolution 🧬
