@@ -10,6 +10,7 @@ Created on Tue Feb 13 11:28:50 2024
 
 import torch
 import datetime
+import pickle
 import numpy as np
 import gymnasium as gym
 
@@ -100,14 +101,33 @@ def run_agents(agents,show_game=True):
     return reward_agents
 
 
-def softmax(x):
+
+def save_generation_data(generation, ga_instance, rewards, df_rewards_performance, df_rewards_cummulative_performance):
     """
-    Compute softmax values for each set of scores in x.
+    Saves the agents, rewards, and performance dataframes at specific generation intervals.
     
     Parameters:
-        x (ndarray): Numpy array containing scores for which softmax is to be computed.
-        
-    Returns:
-        ndarray: Softmax computed values.
+        generation (int): The current generation number.
+        ga_instance: The GeneticAlgorithm instance containing the current generation's agents.
+        rewards (list): The list of rewards for the current generation.
+        df_rewards_performance (DataFrame): DataFrame containing performance metrics.
+        df_rewards_cummulative_performance (DataFrame): DataFrame containing cumulative performance metrics.
     """
-    return np.exp(x) / np.sum(np.exp(x), axis=0)
+    if generation % 20 == 0 and generation != 0:
+        with open(f'agents_generation_{generation}.pkl', 'wb') as agents_file:
+            pickle.dump(ga_instance.agents, agents_file)
+        
+        with open(f'rewards_generation_{generation}.pkl', 'wb') as rewards_file:
+            pickle.dump(rewards, rewards_file)
+             
+        with open(f'df_rewards_performance_generation_{generation}.pkl', 'wb') as performance_file:
+            pickle.dump(df_rewards_performance, performance_file)
+        
+        with open(f'df_rewards_cummulative_performance_generation_{generation}.pkl', 'wb') as cumulative_performance_file:
+            pickle.dump(df_rewards_cummulative_performance, cumulative_performance_file)
+        
+        print(f'Results succesfully saved for generation{generation}')
+        
+        return True
+
+

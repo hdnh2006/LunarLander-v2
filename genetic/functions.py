@@ -17,18 +17,16 @@ class LunarLanderAI(nn.Module):
         def __init__(self):
             super().__init__()
             self.fc = nn.Sequential(
-                        nn.Linear(8,128, bias=True), #2 movimientos iniciales posibles: Cart Position, Cart Velocity, Pole Angle, Pole Velocity At Tip
+                        nn.Linear(8,128, bias=True), # Inputs provided by environment
                         nn.ReLU(),
-                        nn.Linear(128,4, bias=True), #3 movimientos posibles en la salida: izquierda o derecha
-                        nn.Softmax(dim=1) #Generalización de función logística, para dar la probabilidad de que se mueva a izquierda o derecha
+                        nn.Linear(128,4, bias=True), # 4 possible movements in output
+                        nn.Softmax(dim=1) # Logistic function generalization, it gives the probability of each movement
                         )
 
                 
         def forward(self, inputs):
             x = self.fc(inputs)
             return x
-
-
 
 
 class GeneticAlgorithm:
@@ -184,7 +182,7 @@ class GeneticAlgorithm:
                 top_elite_index = i
         
         logging.info("End: Playing candidates to elite...")    
-        logging.info("Elite selected with index ", top_elite_index, " and average score", top_score)
+        logging.info(f'Elite selected with index {top_elite_index} and average score {top_score}')
         
         child_agent = copy.deepcopy(self.agents[top_elite_index])
         return child_agent
