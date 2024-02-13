@@ -31,7 +31,7 @@ parser.add_argument('--generations', type=int, default=500, help='Number of gene
 parser.add_argument('--runs-gen', type=int, default=1, help='Number of runs for the game in each generation (default: 1)')
 parser.add_argument('--runs-elite', type=int, default=1, help='Number of runs for the game while eliting (default: 3)')
 parser.add_argument('--top-limit', type=int, help='Number of top agents to consider as parents')
-parser.add_argument('--show-game', type=bool, default=False, help='Whether to render the game environment')
+parser.add_argument('--show-game', action="store_true", help='Whether to render the game environment')
 args = parser.parse_args()
 
 # variables
@@ -64,7 +64,7 @@ ga_instance = GeneticAlgorithm(num_agents = 500, runs_gen = 1, runs_elite = 3, m
 for generation in range(0,generations):
 
     # return rewards of agents
-    rewards = run_agents_n_times(ga_instance.agents, runs_gen, show_game=False) # return average of 'runs_gen' runs
+    rewards = run_agents_n_times(ga_instance.agents, runs_gen) # return average of 'runs_gen' runs
     
     # Save values each 20 generations 
     save_generation_data(generation, ga_instance, rewards, df_rewards_performance, df_rewards_cummulative_performance)
@@ -99,8 +99,8 @@ for generation in range(0,generations):
     logging.info(f'Rewards for top: {top_rewards}')
     
     # setup an empty list for containing children agents
-    children_agents, elite_index = ga_instance.return_children(sorted_parent_indexes, elite_index)
+    children_agents, elite_index = ga_instance.return_children(sorted_parent_indexes, elite_index, show_game)
 
     # replace agents by their children
-    agents = children_agents
+    ga_instance.agents = children_agents
     

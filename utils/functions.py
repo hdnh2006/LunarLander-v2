@@ -14,7 +14,7 @@ import pickle
 import numpy as np
 import gymnasium as gym
 
-def run_agents_n_times(agents, runs, show_game=False):
+def run_agents_n_times(agents, runs):
     """
     Runs multiple agents a specified number of times and calculates their average score.
     
@@ -26,7 +26,7 @@ def run_agents_n_times(agents, runs, show_game=False):
     Returns:
         list: Average scores of the agents over the specified number of runs.
     """
-    avg_score = [return_average_score(agent, runs, show_game) for agent in agents]
+    avg_score = [return_average_score(agent, runs) for agent in agents]
     return avg_score
 
 
@@ -70,7 +70,6 @@ def run_agents(agents,show_game=True):
         s=0
         
         tini=datetime.datetime.now()
-        i=0
 
         while True:
 
@@ -94,8 +93,6 @@ def run_agents(agents,show_game=True):
                 env.close()
                 break
             
-            i+=1
-
         reward_agents.append(r)        
     
     return reward_agents

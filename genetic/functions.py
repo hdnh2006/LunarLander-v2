@@ -152,7 +152,7 @@ class GeneticAlgorithm:
         return child_agent
     
     
-    def add_elite(self, sorted_parent_indexes, elite_index=None):
+    def add_elite(self, sorted_parent_indexes, elite_index=None, show_game = False):
         
         candidate_elite_index = sorted_parent_indexes[:self.only_consider_top_n]
         
@@ -171,7 +171,7 @@ class GeneticAlgorithm:
             # else:
             #     show=False
             
-            score = return_average_score(self.agents[i], runs=self.runs_elite)
+            score = return_average_score(self.agents[i], self.runs_elite, show_game)
             #print("Score for elite i ", i, " is on average", score)
             
             if(top_score is None):
@@ -191,7 +191,7 @@ class GeneticAlgorithm:
     
     
 
-    def return_children(self, sorted_parent_indexes, elite_index):
+    def return_children(self, sorted_parent_indexes, elite_index, show_game):
         
         children_agents = []
         
@@ -215,7 +215,7 @@ class GeneticAlgorithm:
         mutated_agents=[]
         
         #now add one elite
-        elite_child = self.add_elite(sorted_parent_indexes, elite_index)
+        elite_child = self.add_elite(sorted_parent_indexes, elite_index, show_game)
         children_agents.append(elite_child)
         elite_index = len(children_agents) -1 # This is the last one
         
