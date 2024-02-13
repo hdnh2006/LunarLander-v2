@@ -1,0 +1,8 @@
+# sudo apt-get update
+# sudo apt-get install swig
+torch
+gym
+pandas
+numpy
+matplotlib
+gym[box2d]
