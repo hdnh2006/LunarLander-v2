@@ -1,5 +1,10 @@
 # Requirements for lunar lander 🚀
 
+# First install swig:
+# sudo apt-get update
+# sudo apt-get install swig
+
+# Then pip install -r requirements.txt
 torch
 pandas
 numpy

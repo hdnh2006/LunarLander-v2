@@ -32,8 +32,15 @@ We use [gymnasium](https://gymnasium.farama.org/environments/box2d/lunar_lander/
 
 ## Usage 🔥
 
-Python 3.8 or later with all [requirements.txt](requirements.txt) dependencies installed, including `torch>=1.7`. To install run:
+Python 3.8 or later with all [requirements.txt](requirements.txt) dependencies installed, including `torch>=1.7`. 
 
+You will first need to install [`swig`](https://github.com/swig/swig) (Simplified Wrapper and Interface Generator). To install run:
+```bash
+sudo apt update
+sudo apt install swig
+```
+
+Then just install the requirements:
 ```bash
 pip install -r requirements.txt
 python main.py
