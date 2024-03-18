@@ -5,3 +5,4 @@ pandas
 numpy
 matplotlib
 gymnasium>=0.28
+gymnasium[box2d]>=0.28
