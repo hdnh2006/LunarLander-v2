@@ -6,8 +6,6 @@ Created on Tue Feb 13 11:28:50 2024
 @author: henry
 """
 
-
-
 import torch
 import datetime
 import pickle
@@ -46,7 +44,7 @@ def return_average_score(agent, runs, show_game=False):
     return score
 
 
-def run_agents(agents,show_game=True):
+def run_agents(agents, show_game=False):
     """
     Executes a series of game runs for the given agents in the LunarLander-v2 environment.
     
@@ -110,7 +108,7 @@ def save_generation_data(generation, ga_instance, rewards, df_rewards_performanc
         df_rewards_performance (DataFrame): DataFrame containing performance metrics.
         df_rewards_cummulative_performance (DataFrame): DataFrame containing cumulative performance metrics.
     """
-    if generation % 20 == 0 and generation != 0:
+    if generation % 50 == 0 and generation != 0:
         with open(f'agents_generation_{generation}.pkl', 'wb') as agents_file:
             pickle.dump(ga_instance.agents, agents_file)
         

@@ -114,7 +114,6 @@ class GeneticAlgorithm:
         
         return child_agent
     
-
     
     def mutate(self, agent):
 
@@ -163,13 +162,13 @@ class GeneticAlgorithm:
         top_elite_index = None
         
         logging.info("Start: Playing candidates to elite...")
-        for i in candidate_elite_index:
+        for count, i in enumerate(candidate_elite_index):
             
-            # Just show some of them
-            # if(i%10==0):
-            #     show=True
-            # else:
-            #     show=False
+            # Just show some games
+            if show_game:
+                show = count%3==0
+            else:
+                show = show_game
             
             score = return_average_score(self.agents[i], self.runs_elite, show_game)
             #print("Score for elite i ", i, " is on average", score)
@@ -187,9 +186,6 @@ class GeneticAlgorithm:
         child_agent = copy.deepcopy(self.agents[top_elite_index])
         return child_agent
 
-   
-    
-    
 
     def return_children(self, sorted_parent_indexes, elite_index, show_game):
         
@@ -211,21 +207,10 @@ class GeneticAlgorithm:
         
         logging.info("End: Crossing and Muting agents...")
         
-        
-        mutated_agents=[]
-        
         #now add one elite
         elite_child = self.add_elite(sorted_parent_indexes, elite_index, show_game)
         children_agents.append(elite_child)
         elite_index = len(children_agents) -1 # This is the last one
         
         return children_agents, elite_index
-
-
-
-
-
-
-
-
 

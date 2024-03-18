@@ -11,7 +11,6 @@ import warnings
 import numpy as np
 import torch
 import matplotlib.pyplot as plt
-import pickle
 import pandas as pd
 import logging
 
@@ -27,15 +26,14 @@ logging.basicConfig(
 # Argument parser setup
 parser = argparse.ArgumentParser(description='Run LunarLander AI agent with Deep Neuroevolution Strategies.')
 parser.add_argument('--num-agents', type=int, default=500, help='Number of agents to initialize')
-parser.add_argument('--generations', type=int, default=500, help='Number of generations to evolve')
+parser.add_argument('--generations', type=int, default=1000, help='Number of generations to evolve')
 parser.add_argument('--runs-gen', type=int, default=1, help='Number of runs for the game in each generation (default: 1)')
 parser.add_argument('--runs-elite', type=int, default=1, help='Number of runs for the game while eliting (default: 3)')
-parser.add_argument('--top-limit', type=int, help='Number of top agents to consider as parents')
 parser.add_argument('--show-game', action="store_true", help='Whether to render the game environment')
 args = parser.parse_args()
 
 # variables
-num_agents, generations, runs_gen, runs_elite, top_limit, show_game = args.num_agents, args.generations, args.runs_gen, args.runs_elite, args.top_limit, args.show_game
+num_agents, generations, runs_gen, runs_elite, show_game = args.num_agents, args.generations, args.runs_gen, args.runs_elite, args.show_game
 
 # Apply warnings filter
 warnings.filterwarnings('ignore')
@@ -66,7 +64,7 @@ for generation in range(0,generations):
     # return rewards of agents
     rewards = run_agents_n_times(ga_instance.agents, runs_gen) # return average of 'runs_gen' runs
     
-    # Save values each 20 generations 
+    # Save values each 50 generations 
     save_generation_data(generation, ga_instance, rewards, df_rewards_performance, df_rewards_cummulative_performance)
     
     # sort by rewards
@@ -86,11 +84,14 @@ for generation in range(0,generations):
     cumulative_values = df_rewards_cummulative_performance.iloc[-1, 1:6].values if generation != 0 else 0
     df_rewards_cummulative_performance.loc[generation] = [generation] + list(df_rewards_performance.iloc[generation, 1:6].values + cumulative_values)
 
+    # Save figure of average top elite
     plt.figure()
     plt.plot(df_rewards_performance.generation,df_rewards_performance.average_top_elite,"go-")
     #norm_average=(df_rewards_cummulative_performance.cumm_average_top_elite-np.mean(df_rewards_cummulative_performance.cumm_average_top_elite))/np.std(df_rewards_cummulative_performance.cumm_average_top_elite)
     #plt.plot(df_rewards_performance.generation,norm_average,"go-")
-    plt.show()
+    plt.xlabel('Generation')  # Set the label for the x-axis
+    plt.ylabel('Average Top Elite')  # Set the label for the y-axis
+    plt.savefig("fitness.png", dpi=300)
     
     #----------------- End: performance metrics -----------------------#
     

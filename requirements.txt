@@ -1,8 +1,7 @@
-# sudo apt-get update
-# sudo apt-get install swig
+# Requirements for lunar lander 🚀
+
 torch
-gym
 pandas
 numpy
 matplotlib
-gym[box2d]
+gymnasium>=0.28
